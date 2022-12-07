@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace NotAgain.Utils
 {
-    public class ServiceLocator 
+    public static class ServiceLocator 
     {
         struct Container<TObject> where TObject : class
         {
