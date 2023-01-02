@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace NotAgain.UI.UIManager
 {
-    public enum UIWindowType
+    public enum UIWindowID
     {
     }
 
     [Serializable]
-    public class UITypeUIWindowDictionary : SerializableDictionary<UIWindowType, UIWindow>
+    public class UIWindowIDUIWindowDictionary : SerializableDictionary<UIWindowID, UIWindow>
     {
     }
 
     public class UIWindowManager : MonoBehaviour
     {
-        [SerializeField] UITypeUIWindowDictionary _uiWindows;
+        [SerializeField] UIWindowIDUIWindowDictionary _uiWindows;
     }
 }

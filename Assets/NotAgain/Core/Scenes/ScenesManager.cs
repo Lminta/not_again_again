@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using NotAgain.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,26 +9,37 @@ using UnityEngine.SceneManagement;
 
 namespace NotAgain.Core.Scenes
 {
-    public class ScenesManager : MonoSingleton<ScenesManager>
+    public enum SceneID
     {
-        Dictionary<string, AsyncOperationHandle<SceneInstance>> _currentLoadOperations = new();
+    }
 
-        Dictionary<string, Scene> _loadedScenes = new();
-        bool IsSceneLoaded(string sceneName) => _loadedScenes.ContainsKey(sceneName);
+    [Serializable]
+    public class SceneIDNameDictionary : SerializableDictionary<SceneID, string>
+    {
+    }
+    
+    public class ScenesManager : MonoBehaviour
+    {
+        [SerializeField] SceneIDNameDictionary _scenes = new();
+        
+        Dictionary<SceneID, AsyncOperationHandle<SceneInstance>> _currentLoadOperations = new();
 
-        public async Task LoadScene(string sceneName)
+        Dictionary<SceneID, Scene> _loadedScenes = new();
+        bool IsSceneLoaded(SceneID sceneID) => _loadedScenes.ContainsKey(sceneID);
+
+        public async Task LoadScene(SceneID sceneID)
         {
-            if (IsSceneLoaded(sceneName))
+            if (IsSceneLoaded(sceneID) || !_scenes.ContainsKey(sceneID))
                 return;
 
             AsyncOperationHandle<SceneInstance> operation;
 
-            if (_currentLoadOperations.ContainsKey(sceneName))
-                operation = _currentLoadOperations[sceneName];
+            if (_currentLoadOperations.ContainsKey(sceneID))
+                operation = _currentLoadOperations[sceneID];
             else
             {
-                operation = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                _currentLoadOperations.Add(sceneName, operation);
+                operation = Addressables.LoadSceneAsync(_scenes[sceneID], LoadSceneMode.Additive);
+                _currentLoadOperations.Add(sceneID, operation);
             }
 
 
@@ -37,27 +48,27 @@ namespace NotAgain.Core.Scenes
                 await new WaitForUpdate();
             }
 
-            if (!_loadedScenes.ContainsKey(sceneName))
+            if (!_loadedScenes.ContainsKey(sceneID))
             {
-                _loadedScenes.Add(sceneName, operation.Result.Scene);
+                _loadedScenes.Add(sceneID, operation.Result.Scene);
             }
 
-            _currentLoadOperations.Remove(sceneName);
+            _currentLoadOperations.Remove(sceneID);
         }
 
-        public async Task UnloadScene(string sceneName)
+        public async Task UnloadScene(SceneID sceneID)
         {
-            while (_currentLoadOperations.ContainsKey(sceneName))
+            while (_currentLoadOperations.ContainsKey(sceneID))
             {
                 await new WaitForUpdate();
             }
 
-            if (!IsSceneLoaded(sceneName))
+            if (!IsSceneLoaded(sceneID))
                 return;
             
-            await SceneManager.UnloadSceneAsync(_loadedScenes[sceneName]);
+            await SceneManager.UnloadSceneAsync(_loadedScenes[sceneID]);
 
-            _loadedScenes.Remove(sceneName);
+            _loadedScenes.Remove(sceneID);
         }
     }
 }
