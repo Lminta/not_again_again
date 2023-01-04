@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NotAgain.Utils;
 using UnityEngine;
 
-namespace NotAgain.UI.UIManager
+namespace NotAgain.Core.UI.UIWindow
 {
     public enum UIWindowID
     {
@@ -13,7 +11,7 @@ namespace NotAgain.UI.UIManager
     }
 
     [Serializable]
-    public class UIWindowIDUIWindowDictionary : SerializableDictionary<UIWindowID, UIWindow>
+    public class UIWindowIDUIWindowDictionary : SerializableDictionary<UIWindowID, Core.UI.UIWindow.UIWindow>
     {
     }
 
@@ -21,16 +19,16 @@ namespace NotAgain.UI.UIManager
     {
         [SerializeField] UIWindowIDUIWindowDictionary _uiWindows;
 
-        Dictionary<UIWindowID, UIWindow> _loadedWindows = new();
-        Stack<UIWindow> _openedWindows;
+        Dictionary<UIWindowID, Core.UI.UIWindow.UIWindow> _loadedWindows = new();
+        Stack<Core.UI.UIWindow.UIWindow> _openedWindows;
 
         public UIWindowID CurrentWindowID =>
             _openedWindows.Count > 0 ? _openedWindows.Peek().UIWindowID : UIWindowID.INVALID_WINDOW;
 
-        public UIWindow CurrentWindow =>
+        public Core.UI.UIWindow.UIWindow CurrentWindow =>
             _openedWindows.Count > 0 ? _openedWindows.Peek() : null;
 
-        public async Task<TWindow> Open<TWindow>(UIWindowID windowID) where TWindow : UIWindow
+        public async Task<TWindow> Open<TWindow>(UIWindowID windowID) where TWindow : Core.UI.UIWindow.UIWindow
         {
             if (windowID == UIWindowID.INVALID_WINDOW)
                 return null;
@@ -43,7 +41,7 @@ namespace NotAgain.UI.UIManager
             return window as TWindow;
         }
         
-        public async Task<TWindow> Switch<TWindow>(UIWindowID windowID) where TWindow : UIWindow
+        public async Task<TWindow> Switch<TWindow>(UIWindowID windowID) where TWindow : Core.UI.UIWindow.UIWindow
         {
             if (windowID == UIWindowID.INVALID_WINDOW)
                 return null;
@@ -89,7 +87,7 @@ namespace NotAgain.UI.UIManager
             _loadedWindows.Clear();
         }
 
-        async Task<UIWindow> GetOrCreate(UIWindowID windowID)
+        async Task<Core.UI.UIWindow.UIWindow> GetOrCreate(UIWindowID windowID)
         {
             if (_loadedWindows.TryGetValue(windowID, out var window))
             {

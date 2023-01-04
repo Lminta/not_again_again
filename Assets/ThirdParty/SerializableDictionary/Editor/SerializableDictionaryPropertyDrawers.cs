@@ -1,5 +1,5 @@
 ﻿using NotAgain.Core.Scenes;
-using NotAgain.UI.UIManager;
+using NotAgain.Core.UI.UIWindow;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(UIWindowIDUIWindowDictionary))]

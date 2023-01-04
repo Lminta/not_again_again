@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace NotAgain.UI.UIManager
+namespace NotAgain.Core.UI.UIWindow
 {
     public abstract class UIWindow : MonoBehaviour
     {
