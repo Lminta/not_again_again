@@ -863,7 +863,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -883,11 +883,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 43d9faac-5d33-40ba-b465-7f3a0525708c
+  cloudProjectId: 1043ab61-a061-4ead-8314-3763add5388d
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: New Unity Project
-  organizationId: vladislav-1828626
+  projectName: not_again_again
+  organizationId: lminta_org
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
