@@ -7,41 +7,44 @@ namespace NotAgain.Core.UI.UIWindow
 {
     public enum UIWindowID
     {
-        INVALID_WINDOW
+        INVALID_WINDOW,
+        MAIN_MENU
     }
 
     [Serializable]
-    public class UIWindowIDUIWindowDictionary : SerializableDictionary<UIWindowID, Core.UI.UIWindow.UIWindow>
+    public class UIWindowIDUIWindowDictionary : SerializableDictionary<UIWindowID, UIWindow>
     {
     }
 
     public class UIWindowManager : MonoBehaviour
     {
-        [SerializeField] UIWindowIDUIWindowDictionary _uiWindows;
+        [SerializeField] Canvas _uiCanvas;
+        [SerializeField] UIWindowIDUIWindowDictionary _uiWindows = new();
 
-        Dictionary<UIWindowID, Core.UI.UIWindow.UIWindow> _loadedWindows = new();
-        Stack<Core.UI.UIWindow.UIWindow> _openedWindows;
+        Dictionary<UIWindowID, UIWindow> _loadedWindows = new();
+        Stack<UIWindow> _openedWindows = new ();
 
         public UIWindowID CurrentWindowID =>
             _openedWindows.Count > 0 ? _openedWindows.Peek().UIWindowID : UIWindowID.INVALID_WINDOW;
 
-        public Core.UI.UIWindow.UIWindow CurrentWindow =>
+        public UIWindow CurrentWindow =>
             _openedWindows.Count > 0 ? _openedWindows.Peek() : null;
 
-        public async Task<TWindow> Open<TWindow>(UIWindowID windowID) where TWindow : Core.UI.UIWindow.UIWindow
+        public async Task<TWindow> Open<TWindow>(UIWindowID windowID) where TWindow : UIWindow
         {
             if (windowID == UIWindowID.INVALID_WINDOW)
                 return null;
 
             var window = await GetOrCreate(windowID);
-            await CurrentWindow?.OnClose(windowID);
+            if (CurrentWindowID != UIWindowID.INVALID_WINDOW)
+                await CurrentWindow.OnClose(windowID);
             await window.OnOpen(CurrentWindowID);
             _openedWindows.Push(window);
             
             return window as TWindow;
         }
         
-        public async Task<TWindow> Switch<TWindow>(UIWindowID windowID) where TWindow : Core.UI.UIWindow.UIWindow
+        public async Task<TWindow> Switch<TWindow>(UIWindowID windowID) where TWindow : UIWindow
         {
             if (windowID == UIWindowID.INVALID_WINDOW)
                 return null;
@@ -64,7 +67,8 @@ namespace NotAgain.Core.UI.UIWindow
             
             var window = _openedWindows.Pop();
             await window.OnClose(CurrentWindowID);
-            await CurrentWindow?.OnOpen(window.UIWindowID);
+            if (CurrentWindowID != UIWindowID.INVALID_WINDOW)
+                await CurrentWindow.OnOpen(window.UIWindowID);
             if (!_loadedWindows.ContainsKey(window.UIWindowID))
             {
                 await window.DeInitialize();
@@ -87,7 +91,7 @@ namespace NotAgain.Core.UI.UIWindow
             _loadedWindows.Clear();
         }
 
-        async Task<Core.UI.UIWindow.UIWindow> GetOrCreate(UIWindowID windowID)
+        async Task<UIWindow> GetOrCreate(UIWindowID windowID)
         {
             if (_loadedWindows.TryGetValue(windowID, out var window))
             {
@@ -97,7 +101,7 @@ namespace NotAgain.Core.UI.UIWindow
 
             if (_uiWindows.TryGetValue(windowID, out var prefab))
             {
-                var newWindow = Instantiate(prefab, transform);
+                var newWindow = Instantiate(prefab, _uiCanvas.transform);
                 await newWindow.OnCreate(windowID);
                 await newWindow.Initialize();
             }

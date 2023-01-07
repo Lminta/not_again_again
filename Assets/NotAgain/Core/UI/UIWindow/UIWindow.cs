@@ -13,10 +13,16 @@ namespace NotAgain.Core.UI.UIWindow
             return Task.CompletedTask;
         }
 
-        public abstract Task Initialize();
+        public virtual Task Initialize()
+        {
+            return Task.CompletedTask;
+        }
 
-        public abstract Task DeInitialize();
-        
+        public virtual Task DeInitialize()
+        {
+            return Task.CompletedTask;
+        }
+
         public virtual Task OnOpen(UIWindowID previous)
         {
             gameObject.SetActive(true);

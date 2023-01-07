@@ -7,10 +7,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace NotAgain.Core.Scenes
+namespace NotAgain.Core.Levels
 {
     public enum SceneID
     {
+        MAIN_GAME_SCENE,
+        MINIGAME_SCENE
     }
 
     [Serializable]
@@ -18,7 +20,7 @@ namespace NotAgain.Core.Scenes
     {
     }
     
-    public class ScenesManager : MonoBehaviour
+    public class LevelManager : MonoBehaviour
     {
         [SerializeField] SceneIDNameDictionary _scenes = new();
         

@@ -13,8 +13,6 @@ public class MusicManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = GameObject.FindObjectOfType<MusicManager>();
-
-                DontDestroyOnLoad(_instance.gameObject);
             }
 
             return _instance;
@@ -26,7 +24,6 @@ public class MusicManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
