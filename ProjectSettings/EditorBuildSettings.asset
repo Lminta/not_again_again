@@ -6,20 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/OldScenes/MainMenu.unity
-    guid: 10bb6f50fe5a64397afba2ba6deaa27e
-  - enabled: 1
-    path: Assets/Scenes/OldScenes/map.unity
-    guid: 3c82b3de8d9f94fab95a329145ed76c8
-  - enabled: 1
-    path: Assets/Scenes/OldScenes/GameOver.unity
-    guid: 8bf82a86a2e5545eba6f63acdb61a99f
-  - enabled: 1
-    path: Assets/Scenes/OldScenes/minigame.unity
-    guid: 3d9905dbd4ea04f4a8440de0f72403c3
-  - enabled: 1
-    path: Assets/Scenes/OldScenes/WinScene.unity
-    guid: 6b6c11110a0db473bb66913048be378e
+    path: Assets/Scenes/MainScene.unity
+    guid: 9b547621421c8c8479fa4edb773fb023
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 0a1356e832b101b4fa68538b958f9591,
       type: 2}

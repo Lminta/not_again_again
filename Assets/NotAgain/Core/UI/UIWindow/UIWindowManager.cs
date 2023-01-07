@@ -104,6 +104,7 @@ namespace NotAgain.Core.UI.UIWindow
                 var newWindow = Instantiate(prefab, _uiCanvas.transform);
                 await newWindow.OnCreate(windowID);
                 await newWindow.Initialize();
+                return newWindow;
             }
             
             return null;
