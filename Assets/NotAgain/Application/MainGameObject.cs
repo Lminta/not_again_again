@@ -1,4 +1,6 @@
-﻿using NotAgain.Core.UI.UIWindow;
+﻿using NotAgain.Core.StateManager;
+using NotAgain.Core.UI.UIWindow;
+using NotAgain.States;
 using NotAgain.UI.UIWindiws;
 using NotAgain.Utils;
 using UnityEngine;
@@ -10,7 +12,7 @@ namespace NotAgain.Application
         void Start()
         {
             ApplicationLoad.SetupServices();
-            ServiceLocator.Get<UIWindowManager>().Open<MainMenu>(UIWindowID.MAIN_MENU).IsSuccess();
+            StateManager.EnterState(new MenuState()).IsSuccess();
         }
 
         void OnDestroy()

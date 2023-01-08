@@ -60,9 +60,12 @@ namespace NotAgain.Core.UI.UIWindow
             return await Open<TWindow>(windowID);
         }
         
-        public async Task CloseCurrent()
+        public async Task CloseCurrent(UIWindowID windowID = UIWindowID.INVALID_WINDOW)
         {
             if (CurrentWindowID == UIWindowID.INVALID_WINDOW)
+                return;
+
+            if (windowID != UIWindowID.INVALID_WINDOW && windowID != CurrentWindowID)
                 return;
             
             var window = _openedWindows.Pop();

@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using NotAgain.Core.Levels;
+﻿using NotAgain.Core.StateManager;
 using NotAgain.Core.UI.UIWindow;
+using NotAgain.States;
 using NotAgain.Utils;
-using UnityEngine;
-using UnityEngine.UI;
+
 
 namespace NotAgain.UI.UIWindiws
 {
@@ -11,8 +10,7 @@ namespace NotAgain.UI.UIWindiws
     {
         public void OnClick()
         {
-            ServiceLocator.Get<LevelManager>().LoadScene(SceneID.MAIN_GAME_SCENE).IsSuccess();
-            ServiceLocator.Get<UIWindowManager>().CloseCurrent().IsSuccess();
+            StateManager.EnterState(new MainGameState()).IsSuccess();
         }
     }
 }
