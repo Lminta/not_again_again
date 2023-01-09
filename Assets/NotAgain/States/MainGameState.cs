@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NotAgain.Core.Levels;
 using NotAgain.Core.StateManager;
+using NotAgain.Core.UI.UIWindow;
+using NotAgain.UI.UIWindows;
 using NotAgain.Utils;
 
 namespace NotAgain.States
@@ -9,12 +12,22 @@ namespace NotAgain.States
     {
         public Task OnStateEnter()
         {
-            return ServiceLocator.Get<LevelManager>().LoadScene(SceneID.MAIN_GAME_SCENE);
+            var tasks = new List<Task>(2)
+            {
+                ServiceLocator.Get<UIWindowManager>().Open<MainGameWindow>(UIWindowID.MAIN_GAME),
+                ServiceLocator.Get<LevelManager>().LoadScene(SceneID.MAIN_GAME_SCENE)
+            };
+            return Task.WhenAll(tasks);
         }
 
         public Task OnStateExit()
         {
-            return ServiceLocator.Get<LevelManager>().UnloadScene(SceneID.MAIN_GAME_SCENE);
+            var tasks = new List<Task>(2)
+            {
+                ServiceLocator.Get<UIWindowManager>().CloseCurrent(UIWindowID.MAIN_GAME),
+                ServiceLocator.Get<LevelManager>().UnloadScene(SceneID.MAIN_GAME_SCENE)
+            };
+            return Task.WhenAll(tasks);
         }
     }
 }

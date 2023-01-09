@@ -8,7 +8,8 @@ namespace NotAgain.Core.UI.UIWindow
     public enum UIWindowID
     {
         INVALID_WINDOW,
-        MAIN_MENU
+        MAIN_MENU,
+        MAIN_GAME
     }
 
     [Serializable]

@@ -3,10 +3,9 @@ using NotAgain.Core.UI.UIWindow;
 using NotAgain.States;
 using NotAgain.Utils;
 
-
-namespace NotAgain.UI.UIWindiws
+namespace NotAgain.UI.UIWindows
 {
-    public class MainMenu : UIWindow
+    public class MainMenuWindow : UIWindow
     {
         public void OnClick()
         {

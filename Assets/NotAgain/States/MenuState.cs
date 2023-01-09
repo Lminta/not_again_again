@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NotAgain.Core.StateManager;
 using NotAgain.Core.UI.UIWindow;
-using NotAgain.UI.UIWindiws;
+using NotAgain.UI.UIWindows;
 using NotAgain.Utils;
 
 namespace NotAgain.States
@@ -10,7 +10,7 @@ namespace NotAgain.States
     {
         public Task OnStateEnter()
         {
-            return ServiceLocator.Get<UIWindowManager>().Open<MainMenu>(UIWindowID.MAIN_MENU);
+            return ServiceLocator.Get<UIWindowManager>().Open<MainMenuWindow>(UIWindowID.MAIN_MENU);
         }
 
         public Task OnStateExit()

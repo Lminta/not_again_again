@@ -610,10 +610,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiCanvas: {fileID: 614409206}
   _uiWindows:
-    m_keys: 0000000001000000
+    m_keys: 000000000100000002000000
     m_values:
     - {fileID: 0}
     - {fileID: 640100326131616981, guid: b7490ba96a445dd499a3f39e4a3c5415, type: 3}
+    - {fileID: 1845452286035508827, guid: 43443fe8aedddd74cbfcf84b409ae786, type: 3}
 --- !u!1 &2071040455
 GameObject:
   m_ObjectHideFlags: 0
